@@ -1,103 +1,232 @@
-import Image from "next/image";
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import AuthWrapper from "@/components/dashboard/AuthWrapper";
+import styles from "./page.module.css";
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+export default function HomePage() {
+  const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const handleFilterClick = (filter: string) => {
+    router.push(`/students?${filter}`);
+  };
+
+  if (!mounted) {
+    return (
+      <AuthWrapper>
+        <div className={styles.container}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: "50vh",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            Loading...
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </AuthWrapper>
+    );
+  }
+
+  return (
+    <AuthWrapper>
+      <div className={styles.container}>
+        <div className={styles.maxWidth}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Dashboard</h1>
+            <p className={styles.subtitle}>
+              Welcome to the Student CRM Dashboard
+            </p>
+          </div>
+
+          <div className={styles.grid}>
+            <div className={styles.card}>
+              <h3 className={styles.cardTitle}>Total Students</h3>
+              <div className={`${styles.statNumber} ${styles.blue}`}>342</div>
+              <p className={styles.description}>Registered students</p>
+            </div>
+
+            <div className={styles.card}>
+              <h3 className={styles.cardTitle}>Active Students</h3>
+              <div className={`${styles.statNumber} ${styles.green}`}>189</div>
+              <p className={styles.description}>Active in last 30 days</p>
+            </div>
+
+            <div className={styles.card}>
+              <h3 className={styles.cardTitle}>Essay Stage</h3>
+              <div className={`${styles.statNumber} ${styles.orange}`}>67</div>
+              <p className={styles.description}>Working on essays</p>
+            </div>
+
+            <div className={styles.card}>
+              <h3 className={styles.cardTitle}>Applications Submitted</h3>
+              <div className={`${styles.statNumber} ${styles.green}`}>23</div>
+              <p className={styles.description}>Completed applications</p>
+            </div>
+
+            {/* Action Items - Make these clickable */}
+            <div
+              className={`${styles.card} ${styles.red}`}
+              onClick={() => handleFilterClick("needsEssayHelp=true")}
+              style={{ cursor: "pointer", border: "2px solid #fecaca" }}
+            >
+              <h3 className={styles.cardTitle} style={{ color: "#dc2626" }}>
+                Needs Essay Help
+              </h3>
+              <div className={`${styles.statNumber} ${styles.red}`}>15</div>
+              <p className={styles.description} style={{ color: "#dc2626" }}>
+                Students struggling
+              </p>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#dc2626",
+                  marginTop: "8px",
+                }}
+              >
+                Click to view →
+              </p>
+            </div>
+
+            <div
+              className={styles.card}
+              onClick={() => handleFilterClick("notContactedDays=7")}
+              style={{ cursor: "pointer", border: "2px solid #fed7aa" }}
+            >
+              <h3 className={styles.cardTitle} style={{ color: "#ea580c" }}>
+                Not Contacted (7d)
+              </h3>
+              <div className={`${styles.statNumber} ${styles.orange}`}>28</div>
+              <p className={styles.description} style={{ color: "#ea580c" }}>
+                Need follow-up
+              </p>
+              <p
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#ea580c",
+                  marginTop: "8px",
+                }}
+              >
+                Click to view →
+              </p>
+            </div>
+          </div>
+
+          {/* Recent Activity Section */}
+          <div style={{ marginTop: "32px" }}>
+            <div className={styles.card}>
+              <h3
+                className={styles.cardTitle}
+                style={{ fontSize: "1.125rem", marginBottom: "16px" }}
+              >
+                Recent Activity
+              </h3>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    padding: "8px 0",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "8px",
+                      height: "8px",
+                      backgroundColor: "#2563eb",
+                      borderRadius: "50%",
+                    }}
+                  ></div>
+                  <div>
+                    <span style={{ fontWeight: "600" }}>Sarah Johnson</span>{" "}
+                    asked about Common App essays
+                    <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                      15 minutes ago
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    padding: "8px 0",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "8px",
+                      height: "8px",
+                      backgroundColor: "#059669",
+                      borderRadius: "50%",
+                    }}
+                  ></div>
+                  <div>
+                    <span style={{ fontWeight: "600" }}>Michael Chen</span>{" "}
+                    submitted first essay draft
+                    <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                      2 hours ago
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "12px",
+                    padding: "8px 0",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "8px",
+                      height: "8px",
+                      backgroundColor: "#d97706",
+                      borderRadius: "50%",
+                    }}
+                  ></div>
+                  <div>
+                    <span style={{ fontWeight: "600" }}>Emma Davis</span> viewed
+                    Stanford University
+                    <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                      4 hours ago
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => router.push("/students")}
+                style={{
+                  marginTop: "16px",
+                  padding: "8px 16px",
+                  backgroundColor: "#2563eb",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "6px",
+                  cursor: "pointer",
+                  fontSize: "0.875rem",
+                }}
+              >
+                View All Students →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </AuthWrapper>
   );
 }

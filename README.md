@@ -1,36 +1,113 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Student CRM Dashboard
 
-## Getting Started
+A lightweight internal CRM dashboard for managing student interactions and tracking application progress at **Undergraduation.com**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔐 Authentication
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Firebase Authentication with email/password
+- Protected routes and user sessions
+- Logout functionality
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📊 Dashboard Overview
 
-## Learn More
+- Summary stats (students total, active, needs essay help)
+- Quick filters (e.g., “Needs Essay Help”, “Not Contacted in 7 Days”)
+- Mocked metrics for demo purposes (can be upgraded to live Firestore queries)
 
-To learn more about Next.js, take a look at the following resources:
+### 👥 Student Management
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Directory View**:
+  - Student table with search + filters
+  - Key columns: Name, Email, Country, Status, Last Active
+  - Clickable rows open profile
+- **Profile View**:
+  - Full student info (contact, GPA, SAT, budget, majors, etc.)
+  - Application stage progress bar (Firestore-backed)
+  - Intent scoring system
+  - Flags (e.g., “Needs Essay Help”)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 💬 Communication Tools
 
-## Deploy on Vercel
+- Log communications manually (Email, Call, Note → saved in Firestore)
+- Internal Notes system (add / edit / delete, with audit trail)
+- Communication history timeline synced with Firestore
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📅 Tasks / Reminders
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Student-specific tasks (due dates, status open/done, delete)
+- Global reminder bell (🔔) in header shows all open tasks across students
+- Mark tasks done directly from dropdown
+
+### 📝 AI Summary (Mock)
+
+- Mock AI-generated summary for each student profile
+- Typing animation effect for realistic “AI writing” feel
+- Ready to integrate with OpenAI/Claude API
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend**: Next.js 14 (App Router), React, TypeScript
+- **Styling**: CSS Modules (scoped styles, matches Undergraduation.com theme)
+- **Authentication**: Firebase Auth
+- **Database**: Firestore (students, comms, notes, tasks)
+- **Deployment**: Ready for Vercel/Netlify
+
+---
+
+## 📂 Project Structure
+
+src/
+├── app/
+│ ├── layout.tsx # Root layout
+│ ├── page.tsx # Dashboard home
+│ ├── login/ # Login page
+│ └── students/ # Student directory + profiles
+│ └── [id]/page.tsx # Individual profile
+├── components/
+│ └── dashboard/ # Auth wrapper, layout, reminder bell
+├── lib/ # Firebase, Firestore helpers, mock AI
+└── hooks/ # useAuth (auth state)
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+- Firebase project
+
+### Installation
+
+1. Clone the repo
+   ```bash
+   git clone <your-repo-url>
+   cd student-crm
+   npm install
+   ```
+2. Set up environment variables:
+   cp .env.example .env.local
+   ⚠️ .env.local must NOT be committed — it’s already in .gitignore.
+   Example:
+
+NEXT_PUBLIC_FIREBASE_API_KEY=xxxx
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=xxxx
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=xxxx
+
+3. Configure Firebase:
+   • Enable Authentication (Email/Password)
+   • Enable Firestore Database
+
+4. Start dev server:
+   npm run dev
+
+5. Test credentials (example):
+   Email: maibu@pasha.com
+   Password: maibu123
