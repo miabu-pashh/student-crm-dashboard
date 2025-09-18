@@ -62,17 +62,19 @@ A lightweight internal CRM dashboard for managing student interactions and track
 
 ## 📂 Project Structure
 
+```plaintext
 src/
 ├── app/
-│ ├── layout.tsx # Root layout
-│ ├── page.tsx # Dashboard home
-│ ├── login/ # Login page
-│ └── students/ # Student directory + profiles
-│ └── [id]/page.tsx # Individual profile
+│   ├── layout.tsx        # Root layout
+│   ├── page.tsx          # Dashboard home
+│   ├── login/            # Login page
+│   └── students/         # Student directory + profiles
+│       └── [id]/page.tsx # Individual profile
 ├── components/
-│ └── dashboard/ # Auth wrapper, layout, reminder bell
-├── lib/ # Firebase, Firestore helpers, mock AI
-└── hooks/ # useAuth (auth state)
+│   └── dashboard/        # Auth wrapper, layout, reminder bell
+├── lib/                  # Firebase, Firestore helpers, mock AI
+└── hooks/                # useAuth (auth state)
+```
 
 ---
 
